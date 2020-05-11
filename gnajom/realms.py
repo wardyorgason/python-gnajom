@@ -33,8 +33,8 @@ __all__ = (
     "DEFAULT_REALMS_HOST", "DEFAULT_REALMS_VERSION", )
 
 
-HOST_DESKTOP_REALMS = "https://mcoapi.minecraft.net"
-HOST_PE_REALMS = "https://peoapi.minecraft.net"
+HOST_PE_REALMS = "https://pocket.realms.minecraft.net"
+HOST_DESKTOP_REALMS = "https://pc.realms.minecraft.net"
 
 DEFAULT_REALMS_HOST = HOST_DESKTOP_REALMS
 DEFAULT_REALMS_VERSION = "1.10.2"
@@ -63,8 +63,9 @@ class RealmsAPI(GnajomAPI):
         super().__init__(auth, host, apicache, debug_hook)
 
         # compose the necessary cookies from data in the auth object
-        sid = "token:%s:%s" % (auth.accessToken, auth.selectedProfile["id"])
-        user = auth.selectedProfile["name"]
+        # sid = "token:%s:%s" % (auth.accessToken, auth.selectedProfile["id"]) 
+        sid = "token:%s:%s" % (auth.access_token, auth.selected_profile["id"])
+        user = auth.selected_profile["name"]
 
         self.api.cookies.set("sid", sid)
         self.api.cookies.set("user", user)

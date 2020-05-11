@@ -35,7 +35,7 @@ from appdirs import AppDirs
 from argparse import (
     ArgumentError, ArgumentParser, FileType,
     _AppendAction, _AppendConstAction, _StoreAction, _StoreConstAction, )
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 from datetime import datetime
 from getpass import getpass
 from json import dump, load, loads
@@ -1349,7 +1349,8 @@ _SERVICE_NAMES = {
     "api.mojang.com": "Mojang Public API",
     "auth.mojang.com": "Mojang authentication (Legacy)",
     "authserver.mojang.com": "Mojang authentication (Yggdrasil)",
-    "mcoapi.minecraft.net": "Minecraft Realms",
+    # "mcoapi.minecraft.net": "Minecraft Realms",
+    "pc.realms.minecraft.net": "Minecraft Realms",
     "minecraft.net": "Minecraft website",
     "mojang.com": "Mojang website",
     "peoapi.minecraft.net": "Pocked Edition Realms",
@@ -1615,7 +1616,7 @@ def cli_command_config_write(options):
     cli: gnajom config write
     """
 
-    cparser = SafeConfigParser()
+    cparser = ConfigParser()
     cparser.add_section("defaults")
 
     for key, val in sorted(DEFAULTS.items()):
@@ -1847,7 +1848,7 @@ def cli_argparser(argv=None):
     parser.set_defaults(**DEFAULTS)
 
     # update the defaults from the config file
-    config = SafeConfigParser()
+    config = ConfigParser()
     if config.read([options.config]):
         parser.set_defaults(**dict(config.items("defaults")))
 
